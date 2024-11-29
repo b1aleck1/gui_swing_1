@@ -1,4 +1,4 @@
-package zad2;
+package zad3;
 
 import javax.swing.*;
 import java.awt.*;
