@@ -6,82 +6,87 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ColorChangerGUI {
+
     public static void main(String[] args) {
-        // Tworzenie głównego okna JFrame
-        JFrame frame = new JFrame("Zmiana koloru panelu");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setBounds(500,500,400,200);
-        frame.setLayout(new BorderLayout());
+        SwingUtilities.invokeLater(() -> new ColorChangerFrame().setVisible(true));
+    }
+}
 
-        // Tworzenie panelu, którego kolor będzie zmieniany
-        JPanel colorPanel = new JPanel();
-        frame.add(colorPanel, BorderLayout.CENTER);
+// Klasa reprezentująca główne okno aplikacji
+class ColorChangerFrame extends JFrame {
+    private JPanel colorPanel; // Panel, którego kolor będzie zmieniany
+    private JTextField colorTextField; // Pole tekstowe do wprowadzania nazwy koloru
 
-        // Tworzenie panelu dla komponentów wejścia
-        JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new FlowLayout());
+    public ColorChangerFrame() {
+        setTitle("Zmiana koloru panelu");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(500, 500, 400, 200);
+        setLayout(new BorderLayout());
 
-        // Dodanie pola tekstowego
-        JTextField colorTextField = new JTextField(15);
-        inputPanel.add(colorTextField);
+        initComponents();
+    }
 
-        // Dodanie przycisku
+    // Metoda inicjalizująca komponenty GUI
+    private void initComponents() {
+        colorPanel = new JPanel();
+        add(colorPanel, BorderLayout.CENTER);
+
+        JPanel inputPanel = new JPanel(new FlowLayout());
+        colorTextField = new JTextField(15);
         JButton changeColorButton = new JButton("Zmień kolor");
+
+        changeColorButton.addActionListener(new ColorChangeListener());
+
+        inputPanel.add(colorTextField);
         inputPanel.add(changeColorButton);
 
-        // Dodanie panelu wejściowego na dole
-        frame.add(inputPanel, BorderLayout.SOUTH);
+        add(inputPanel, BorderLayout.SOUTH);
+    }
 
-        changeColorButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String colorName = colorTextField.getText().trim().toLowerCase();
-                Color newColor;
+    // Klasa wewnętrzna obsługująca zdarzenie zmiany koloru
+    private class ColorChangeListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String colorName = colorTextField.getText().trim().toLowerCase();
+            Color newColor = parseColor(colorName);
 
-                switch (colorName) {
-                    case "czerwony":
-                        newColor = Color.RED;
-                        break;
-                    case "zielony":
-                        newColor = Color.GREEN;
-                        break;
-                    case "niebieski":
-                        newColor = Color.BLUE;
-                        break;
-                    case "żółty":
-                        newColor = Color.YELLOW;
-                        break;
-                    case "czarny":
-                        newColor = Color.BLACK;
-                        break;
-                    case "biały":
-                        newColor = Color.WHITE;
-                        break;
-                    case "szary":
-                        newColor = Color.GRAY;
-                        break;
-                    case "różowy":
-                        newColor = Color.PINK;
-                        break;
-                    case "pomarańczowy":
-                        newColor = Color.ORANGE;
-                        break;
-                    case "fioletowy":
-                        newColor = new Color(128, 0, 128); // Niestandardowy kolor
-                        break;
-                    default:
-                        JOptionPane.showMessageDialog(frame,
-                                "Nieprawidłowa nazwa koloru: " + colorName,
-                                "Błąd",
-                                JOptionPane.ERROR_MESSAGE);
-                        return;
-                }
-
+            if (newColor != null) {
                 colorPanel.setBackground(newColor);
+            } else {
+                JOptionPane.showMessageDialog(ColorChangerFrame.this,
+                        "Nieprawidłowa nazwa koloru: " + colorName,
+                        "Błąd",
+                        JOptionPane.ERROR_MESSAGE);
             }
-        });
+        }
+    }
 
-        frame.setVisible(true);
+    // Metoda pomocnicza do przekształcenia nazwy koloru na obiekt Color
+    private Color parseColor(String colorName) {
+        switch (colorName) {
+            case "czerwony":
+                return Color.RED;
+            case "zielony":
+                return Color.GREEN;
+            case "niebieski":
+                return Color.BLUE;
+            case "żółty":
+                return Color.YELLOW;
+            case "czarny":
+                return Color.BLACK;
+            case "biały":
+                return Color.WHITE;
+            case "szary":
+                return Color.GRAY;
+            case "różowy":
+                return Color.PINK;
+            case "pomarańczowy":
+                return Color.ORANGE;
+            case "fioletowy":
+                return new Color(128, 0, 128); // Niestandardowy kolor
+            default:
+                return null;
+        }
     }
 }
 
