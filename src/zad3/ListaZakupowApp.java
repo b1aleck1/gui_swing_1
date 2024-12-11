@@ -6,37 +6,42 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ListaZakupowApp {
+
     public static void main(String[] args) {
-        // Tworzenie głównego okna aplikacji
-        JFrame frame = new JFrame("Lista Zakupów");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 300);
+        SwingUtilities.invokeLater(() -> ListaZakupowApp.createAndShowGUI());
+    }
 
-        // Panel główny
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
+        private static void createAndShowGUI() {
 
-        // Pole tekstowe do wprowadzania produktów
-        JTextField productField = new JTextField();
-        panel.add(productField, BorderLayout.NORTH);
+            JFrame frame = new JFrame("Lista Zakupów");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(400, 300);
 
-        // Model listy zakupów
-        DefaultListModel<String> listModel = new DefaultListModel<>();
-        JList<String> shoppingList = new JList<>(listModel);
-        shoppingList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        JScrollPane scrollPane = new JScrollPane(shoppingList);
-        panel.add(scrollPane, BorderLayout.CENTER);
+            JPanel panel = new JPanel();
+            panel.setLayout(new BorderLayout());
 
-        // Panel z przyciskiem "Dodaj" i usuwania produktów
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout());
+            // Pole tekstowe do wprowadzania produktów
+            JTextField productField = new JTextField();
+            panel.add(productField, BorderLayout.NORTH);
 
-        JButton addButton = new JButton("Dodaj");
-        JButton removeButton = new JButton("Usuń");
-        buttonPanel.add(addButton);
-        buttonPanel.add(removeButton);
+            // Model listy zakupów
+            DefaultListModel<String> listModel = new DefaultListModel<>();
+            JList<String> shoppingList = new JList<>(listModel);
+            shoppingList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            JScrollPane scrollPane = new JScrollPane(shoppingList);
+            panel.add(scrollPane, BorderLayout.CENTER);
 
-        panel.add(buttonPanel, BorderLayout.SOUTH);
+            // Panel z przyciskiem "Dodaj" i usuwania produktów
+            JPanel buttonPanel = new JPanel();
+            buttonPanel.setLayout(new FlowLayout());
+
+            JButton addButton = new JButton("Dodaj");
+            JButton removeButton = new JButton("Usuń");
+            buttonPanel.add(addButton);
+            buttonPanel.add(removeButton);
+
+            panel.add(buttonPanel, BorderLayout.SOUTH);
+
 
         // Akcja po kliknięciu przycisku "Dodaj"
         addButton.addActionListener(new ActionListener() {
@@ -61,7 +66,6 @@ public class ListaZakupowApp {
             }
         });
 
-        // Dodanie panelu do głównego okna
         frame.add(panel);
         frame.setVisible(true);
     }

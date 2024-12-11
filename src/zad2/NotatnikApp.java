@@ -7,31 +7,38 @@ import java.awt.event.ActionListener;
 import java.io.*;
 
 public class NotatnikApp {
+
     public static void main(String[] args) {
-        // Tworzenie głównego okna aplikacji
+        SwingUtilities.invokeLater(() -> NotatnikApp.createAndShowGUI());
+//        SwingUtilities.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                createAndShowGUI();
+//            }
+//        });
+    }
+
+    private static void createAndShowGUI() {
         JFrame frame = new JFrame("Notatnik");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);
 
-        // Obszar tekstowy
         JTextArea textArea = new JTextArea();
-        JScrollPane scrollPane = new JScrollPane(textArea);
-        frame.add(scrollPane, BorderLayout.CENTER);
+        frame.add(createScrollPane(textArea), BorderLayout.CENTER);
+        frame.add(createToolBar(frame, textArea), BorderLayout.NORTH);
+        //frame.setJMenuBar(createMenuBar(frame, textArea));
 
-        // Pasek narzędzi (toolbar)
+        frame.setVisible(true);
+    }
+
+    private static JScrollPane createScrollPane(JTextArea textArea) {
+        return new JScrollPane(textArea);
+    }
+
+    private static JToolBar createToolBar(JFrame frame, JTextArea textArea) {
         JToolBar toolBar = new JToolBar();
+
         JButton newButton = new JButton("Nowy");
-        JButton openButton = new JButton("Otwórz");
-        JButton saveButton = new JButton("Zapisz");
-        JButton exitButton = new JButton("Zamknij");
-
-        toolBar.add(newButton);
-        toolBar.add(openButton);
-        toolBar.add(saveButton);
-        toolBar.add(exitButton);
-        frame.add(toolBar, BorderLayout.NORTH);
-
-        // Akcja "Nowy"
         newButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -39,41 +46,23 @@ public class NotatnikApp {
             }
         });
 
-        // Akcja "Otwórz"
+        JButton openButton = new JButton("Otwórz");
         openButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFileChooser fileChooser = new JFileChooser();
-                int option = fileChooser.showOpenDialog(frame);
-                if (option == JFileChooser.APPROVE_OPTION) {
-                    File file = fileChooser.getSelectedFile();
-                    try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-                        textArea.read(reader, null);
-                    } catch (IOException ex) {
-                        JOptionPane.showMessageDialog(frame, "Błąd podczas otwierania pliku", "Błąd", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
+                openFile(frame, textArea);
             }
         });
 
-        // Akcja "Zapisz"
+        JButton saveButton = new JButton("Zapisz");
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFileChooser fileChooser = new JFileChooser();
-                int option = fileChooser.showSaveDialog(frame);
-                if (option == JFileChooser.APPROVE_OPTION) {
-                    File file = fileChooser.getSelectedFile();
-                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-                        textArea.write(writer);
-                    } catch (IOException ex) {
-                        JOptionPane.showMessageDialog(frame, "Błąd podczas zapisywania pliku", "Błąd", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
+                saveFile(frame, textArea);
             }
         });
 
-        // Akcja "Zamknij"
+        JButton exitButton = new JButton("Zamknij");
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -81,14 +70,49 @@ public class NotatnikApp {
             }
         });
 
-        // Pasek menu
+        toolBar.add(newButton);
+        toolBar.add(openButton);
+        toolBar.add(saveButton);
+        toolBar.add(exitButton);
+
+        return toolBar;
+    }
+/*
+    private static JMenuBar createMenuBar(JFrame frame, JTextArea textArea) {
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("Plik");
 
         JMenuItem newItem = new JMenuItem("Nowy");
+        newItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textArea.setText("");
+            }
+        });
+
         JMenuItem openItem = new JMenuItem("Otwórz");
+        openItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                openFile(frame, textArea);
+            }
+        });
+
         JMenuItem saveItem = new JMenuItem("Zapisz");
+        saveItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveFile(frame, textArea);
+            }
+        });
+
         JMenuItem exitItem = new JMenuItem("Zamknij");
+        exitItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+            }
+        });
 
         fileMenu.add(newItem);
         fileMenu.add(openItem);
@@ -97,15 +121,34 @@ public class NotatnikApp {
         fileMenu.add(exitItem);
 
         menuBar.add(fileMenu);
-        frame.setJMenuBar(menuBar);
+        return menuBar;
+    }
+*/
+    private static void openFile(JFrame frame, JTextArea textArea) {
+        JFileChooser fileChooser = new JFileChooser();
+        if (fileChooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                textArea.read(reader, null);
+            } catch (IOException ex) {
+                showErrorDialog(frame, "Błąd podczas otwierania pliku");
+            }
+        }
+    }
 
-        // Połączenie akcji z menu
-        newItem.addActionListener(e -> newButton.doClick());
-        openItem.addActionListener(e -> openButton.doClick());
-        saveItem.addActionListener(e -> saveButton.doClick());
-        exitItem.addActionListener(e -> exitButton.doClick());
+    private static void saveFile(JFrame frame, JTextArea textArea) {
+        JFileChooser fileChooser = new JFileChooser();
+        if (fileChooser.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                textArea.write(writer);
+            } catch (IOException ex) {
+                showErrorDialog(frame, "Błąd podczas zapisywania pliku");
+            }
+        }
+    }
 
-        // Wyświetlenie okna
-        frame.setVisible(true);
+    private static void showErrorDialog(JFrame frame, String message) {
+        JOptionPane.showMessageDialog(frame, message, "Błąd", JOptionPane.ERROR_MESSAGE);
     }
 }
