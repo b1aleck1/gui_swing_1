@@ -23,6 +23,12 @@ public class NotatnikApp {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);
 
+        // Ustawienie okna na środku ekranu
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (screenSize.width - frame.getWidth()) / 2;
+        int y = (screenSize.height - frame.getHeight()) / 2;
+        frame.setLocation(x, y);
+
         JTextArea textArea = new JTextArea();
         frame.add(createScrollPane(textArea), BorderLayout.CENTER);
         frame.add(createToolBar(frame, textArea), BorderLayout.NORTH);

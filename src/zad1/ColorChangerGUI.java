@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 public class ColorChangerGUI {
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> ColorChangerGUI.createAndShowGUI());
+        SwingUtilities.invokeLater(ColorChangerGUI::createAndShowGUI);
     }
 
     private static void createAndShowGUI() {
@@ -17,6 +17,12 @@ public class ColorChangerGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setBounds(500, 500, 400, 200);
         frame.setLayout(new BorderLayout());
+
+        // Ustawienie okna na środku ekranu
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (screenSize.width - frame.getWidth()) / 2;
+        int y = (screenSize.height - frame.getHeight()) / 2;
+        frame.setLocation(x, y);
 
         JPanel colorPanel = new JPanel();
         frame.add(colorPanel, BorderLayout.CENTER);

@@ -17,6 +17,12 @@ public class ListaZakupowApp {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(400, 300);
 
+            // Ustawienie okna na środku ekranu
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            int x = (screenSize.width - frame.getWidth()) / 2;
+            int y = (screenSize.height - frame.getHeight()) / 2;
+            frame.setLocation(x, y);
+
             JPanel panel = new JPanel();
             panel.setLayout(new BorderLayout());
 
