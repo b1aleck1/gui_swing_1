@@ -9,7 +9,7 @@ import java.io.*;
 public class NotatnikApp {
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> NotatnikApp.createAndShowGUI());
+        SwingUtilities.invokeLater(NotatnikApp::createAndShowGUI); //(()->)
 //        SwingUtilities.invokeLater(new Runnable() {
 //            @Override
 //            public void run() {
