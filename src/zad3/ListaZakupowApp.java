@@ -20,7 +20,6 @@ public class ListaZakupowApp {
             JPanel panel = new JPanel();
             panel.setLayout(new BorderLayout());
 
-            // Pole tekstowe do wprowadzania produktów
             JTextField productField = new JTextField();
             panel.add(productField, BorderLayout.NORTH);
 
@@ -31,7 +30,7 @@ public class ListaZakupowApp {
             JScrollPane scrollPane = new JScrollPane(shoppingList);
             panel.add(scrollPane, BorderLayout.CENTER);
 
-            // Panel z przyciskiem "Dodaj" i usuwania produktów
+            // Panel z przyciskiem
             JPanel buttonPanel = new JPanel();
             buttonPanel.setLayout(new FlowLayout());
 
@@ -65,7 +64,6 @@ public class ListaZakupowApp {
                 }
             }
         });
-
         frame.add(panel);
         frame.setVisible(true);
     }
