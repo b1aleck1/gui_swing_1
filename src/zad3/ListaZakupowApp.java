@@ -17,7 +17,6 @@ public class ListaZakupowApp {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(400, 300);
 
-            // Ustawienie okna na środku ekranu
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             int x = (screenSize.width - frame.getWidth()) / 2;
             int y = (screenSize.height - frame.getHeight()) / 2;
@@ -36,7 +35,6 @@ public class ListaZakupowApp {
             JScrollPane scrollPane = new JScrollPane(shoppingList);
             panel.add(scrollPane, BorderLayout.CENTER);
 
-            // Panel z przyciskiem
             JPanel buttonPanel = new JPanel();
             buttonPanel.setLayout(new FlowLayout());
 
@@ -47,8 +45,6 @@ public class ListaZakupowApp {
 
             panel.add(buttonPanel, BorderLayout.SOUTH);
 
-
-        // Akcja po kliknięciu przycisku "Dodaj"
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -60,7 +56,6 @@ public class ListaZakupowApp {
             }
         });
 
-        // Akcja po kliknięciu przycisku "Usuń"
         removeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

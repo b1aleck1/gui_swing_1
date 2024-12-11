@@ -9,7 +9,9 @@ import java.io.*;
 public class SimpleTextEditor {
 
     public static void main(String[] args) {
-
+        SwingUtilities.invokeLater(() -> SimpleTextEditor.createAndShowGUI());
+    }
+        public static void createAndShowGUI() {
         JFrame frame = new JFrame("Prosty Edytor Tekstu");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);

@@ -6,8 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class EncryptionApp {
-    public static void main(String[] args) {
 
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> EncryptionApp.createAndShowGUI());
+    }
+
+    private static void createAndShowGUI() {
         JFrame frame = new JFrame("Aplikacja szyfrująca");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 200);
