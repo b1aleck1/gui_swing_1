@@ -11,7 +11,8 @@ public class SimpleTextEditor {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> SimpleTextEditor.createAndShowGUI());
     }
-        public static void createAndShowGUI() {
+
+    public static void createAndShowGUI() {
         JFrame frame = new JFrame("Prosty Edytor Tekstu");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);
@@ -26,7 +27,6 @@ public class SimpleTextEditor {
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-
 
         JButton saveButton = new JButton("Zapisz");
         JButton loadButton = new JButton("Wczytaj");

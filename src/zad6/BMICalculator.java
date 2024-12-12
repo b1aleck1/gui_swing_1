@@ -10,7 +10,9 @@ public class BMICalculator {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> BMICalculator.createAndShowGUI());
     }
-        private static void createAndShowGUI () {
+
+    private static void createAndShowGUI () {
+
             JFrame frame = new JFrame("Kalkulator BMI");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(370, 200);
@@ -46,22 +48,21 @@ public class BMICalculator {
                         double weight = Double.parseDouble(weightField.getText());
                         double height = Double.parseDouble(heightField.getText());
 
-
                         double bmi = weight / (height * height);
                         String category;
 
                         if (bmi < 18.5) {
                             category = "Niedowaga";
-                            resultLabel.setForeground(Color.BLUE); // Niedowaga
+                            resultLabel.setForeground(Color.BLUE);
                         } else if (bmi >= 18.5 && bmi < 25) {
                             category = "Norma";
-                            resultLabel.setForeground(Color.GREEN); // Norma
+                            resultLabel.setForeground(Color.GREEN);
                         } else if (bmi >= 25 && bmi < 30) {
                             category = "Nadwaga";
-                            resultLabel.setForeground(Color.YELLOW); // Nadwaga
+                            resultLabel.setForeground(Color.YELLOW);
                         } else {
                             category = "Otyłość";
-                            resultLabel.setForeground(Color.RED); // Otyłość
+                            resultLabel.setForeground(Color.RED);
                         }
 
                         resultLabel.setText(String.format("Wynik BMI: %.2f (%s)", bmi, category));

@@ -16,13 +16,11 @@ public class UnitConverter extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
 
-        // Ustawienie okna na środku ekranu
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (screenSize.width - getWidth()) / 2;
         int y = (screenSize.height - getHeight()) / 2;
         setLocation(x, y);
 
-        // Utwórz komponenty
         String[] lengthUnits = {"Metry", "Kilometry", "Centymetry", "Milimetry"};
 
         JPanel inputPanel = new JPanel();
@@ -84,8 +82,6 @@ public class UnitConverter extends JFrame implements ActionListener {
 
     private double convertUnits(double value, String fromUnit, String toUnit) {
         double meters = 0;
-
-
         switch (fromUnit) {
             case "Metry":
                 meters = value;

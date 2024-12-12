@@ -22,7 +22,7 @@ public class EncryptionApp {
         frame.setLocation(x, y);
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(4, 1));
+        panel.setLayout(new GridLayout(3, 1));
 
         JTextField inputField = new JTextField();
         panel.add(new JLabel("Wprowadź tekst do zaszyfrowania:"));
@@ -61,7 +61,6 @@ public class EncryptionApp {
         frame.setVisible(true);
     }
 
-    // Metoda realizująca szyfr Cezara
     private static String caesarCipher(String text, int shift) {
         StringBuilder result = new StringBuilder();
         for (char c : text.toCharArray()) {
@@ -75,7 +74,7 @@ public class EncryptionApp {
         return result.toString();
     }
 
-    // Metoda realizująca szyfr ROT13
+    // Metoda realizująca szyfr ROT13 - Cezar tylko z przesunięciem o 13
     private static String rot13Cipher(String text) {
         return caesarCipher(text, 13);
     }
